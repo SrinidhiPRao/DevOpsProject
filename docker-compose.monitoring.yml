@@ -5,7 +5,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - shared-logs:/app/logs  # Shared log location
+      - shared-logs:/app/logs  
     logging:
       driver: "json-file"
       options:
@@ -24,7 +24,7 @@ services:
     container_name: promtail
     volumes:
       - ./promtail-config.yml:/etc/promtail/promtail-config.yml
-      - shared-logs:/app/logs  # Shared volume
+      - shared-logs:/app/logs  
     command: -config.file=/etc/promtail/promtail-config.yml
 
   prometheus:
