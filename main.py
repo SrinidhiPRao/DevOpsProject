@@ -29,7 +29,7 @@ logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     handlers=[
-        logging.FileHandler(filename="/app/logs/app.log"),
+        logging.FileHandler(filename="./logs/app.log"),
         logging.StreamHandler(),
     ],
 )
@@ -38,7 +38,6 @@ logger = logging.getLogger(__name__)
 
 app = FastAPI(
     title="Learning FastAPI with Observability",
-    description="A simple FastAPI app for learning Loki, Grafana, and Prometheus integration",
     version="1.0.0",
 )
 
