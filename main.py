@@ -11,7 +11,6 @@ from prometheus_fastapi_instrumentator import Instrumentator
 from fastapi.exceptions import HTTPException
 import uvicorn
 
-# In-memory note store
 notes_db: Dict[str, Dict] = {}
 
 
@@ -38,7 +37,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 app = FastAPI(
-    title="Learning FastAPI with Observability",
+    title="Note Taking App",
     version="1.0.0",
 )
 
@@ -54,7 +53,7 @@ async def home():
     logger.info("Home endpoint accessed")
 
     response_data = {
-        "message": "Welcome to FastAPI Observability Learning!",
+        "message": "Welcome to Note-Taking-App!",
         "timestamp": datetime.now().isoformat(),
         "status": "healthy",
     }
