@@ -1,9 +1,6 @@
 __pycache__
 .pytest_cache
 .venv
-app.log
-build
-jenk.spec
 
 ~WRL1664.tmp
 ~$vOpsProject.docx
