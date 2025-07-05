@@ -1,28 +1,48 @@
 pipeline {
   agent any
 
-  environment {
-    COMPOSE_PROJECT_NAME = "jenkins_app"
-  }
-
   stages {
-    stage('Build and Deploy') {
+    stage('Setup venv & Install') {
       steps {
-        sh 'python main.py &'
+        sh '''
+          python3 -m venv venv
+          . venv/bin/activate
+          pip install -r requirements.txt
+        '''
       }
     }
 
-    stage('Unit tests') {
+    stage('Run Pytest') {
       steps {
-        sh 'pytest'
-        }
+        sh './venv/bin/pytest'
+      }
     }
 
-    stage('Test endpoint') {
+    stage('Run App in Background') {
       steps {
-        sh 'curl -i http://localhost:3000/login'
+        sh '''
+          nohup ./venv/bin/python3 main.py > app.log 2>&1 &
+          echo $! > app.pid
+          sleep 2  
+        '''
+      }
+    }
+
+    stage('Curl App') {
+      steps {
+        sh '''
+          curl -i http://127.0.0.1:8000/
+        '''
+      }
+    }
+
+    stage('Stop App') {
+      steps {
+        sh '''
+          kill $(cat app.pid)
+          rm app.pid
+        '''
       }
     }
   }
-
 }
