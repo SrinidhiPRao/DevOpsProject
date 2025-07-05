@@ -9,6 +9,7 @@ from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 from prometheus_fastapi_instrumentator import Instrumentator
 from fastapi.exceptions import HTTPException
+import uvicorn
 
 # In-memory note store
 notes_db: Dict[str, Dict] = {}
@@ -163,7 +164,9 @@ async def delete_note(note_id: str):
     return JSONResponse(content={"message": "Note deleted", "note": deleted_note})
 
 
-if __name__ == "__main__":
-    import uvicorn
-
+def main():
     uvicorn.run(app, host="0.0.0.0", port=8000)
+
+
+if __name__ == "__main__":
+    main()
