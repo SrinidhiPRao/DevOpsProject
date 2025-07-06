@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-lb-config
+data:
+  nginx.conf: |
+    events {}
+    http {
+      upstream fastapi_backend {
+        server fastapi-service:8000;
+      }
+
+      server {
+        listen 80;
+
+        location / {
+          proxy_pass http://fastapi_backend;
+        }
+      }
+    }
